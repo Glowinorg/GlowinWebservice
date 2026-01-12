@@ -68,23 +68,19 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .cors(cors -> {})
             .csrf(csrf -> csrf.disable())
-
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(
-                    (req, res, e) ->
-                        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
-                )
-            )
-
+            .cors(cors -> {})
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
+            )
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint(
+                    (req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                )
             );
 
         http.addFilterBefore(

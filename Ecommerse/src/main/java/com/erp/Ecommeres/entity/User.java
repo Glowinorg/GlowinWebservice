@@ -28,6 +28,9 @@ public class User {
 
     @Transient
     private String confirmPassword;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ForgotPassword forgotPassword;
 
     // ===== Getters & Setters =====
 
@@ -86,4 +89,6 @@ public class User {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+    
+    
 }
