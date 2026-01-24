@@ -74,9 +74,11 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
-            )
+            	    .requestMatchers("/auth/**").permitAll()
+            	   // .requestMatchers("/api/**").permitAll()
+            	    .anyRequest().authenticated()
+            	)
+
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint(
                     (req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
